@@ -2,6 +2,7 @@ import 'package:eslami/core/constant/app_assets.dart';
 import 'package:eslami/core/theme/app_colors.dart';
 import 'package:eslami/screens/layout/hadith/hadith_screen.dart';
 import 'package:eslami/screens/layout/quran/Quran_screen.dart';
+import 'package:eslami/screens/layout/radio/radio_screen.dart';
 import 'package:eslami/screens/layout/sepha/sepha_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -18,7 +19,8 @@ class _LayoutScreenState extends State<LayoutScreen> {
   List <Widget> screens = [
     QuranScreen(),
     HadithScreen(),
-    SephaScreen()
+    SephaScreen(),
+    RadioScreen(),
 
   ];
   int currentIndex = 0;

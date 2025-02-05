@@ -36,6 +36,8 @@ dependencies:
   cupertino_icons: ^1.0.8
   smooth_page_indicator:
   google_fonts: ^6.2.1
+  carousel_slider:
+
 
 dev_dependencies:
   flutter_test:
@@ -66,6 +68,7 @@ flutter:
      - assets/icons/
      - assets/initial pages/
      - assets/suras/Suras/
+     - assets/Hadeeth/
 
 
   # An image asset can refer to one or more resolution-specific "variants", see
