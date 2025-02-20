@@ -18,6 +18,7 @@ class HistoryWidget extends StatelessWidget {
     var theme = Theme.of(context);
 
     return Container(
+        margin: EdgeInsets.symmetric(horizontal: 5),
         decoration: BoxDecoration(
             color: AppColors.coffee, borderRadius: BorderRadius.circular(20)),
         child: Padding(
@@ -31,14 +32,20 @@ class HistoryWidget extends StatelessWidget {
                     children: [
                       Text(
                         surahEn,
+                        style: theme.textTheme.bodySmall!
+                            .copyWith(color: Colors.black),
                       ),
                       Spacer(),
                       Text(
                         surahAr,
+                        style: theme.textTheme.bodySmall!
+                            .copyWith(color: Colors.black),
                       ),
                       Spacer(),
                       Text(
                         ayaNumber,
+                        style: theme.textTheme.bodySmall!
+                            .copyWith(color: Colors.black),
                       ),
                     ],
                   ),

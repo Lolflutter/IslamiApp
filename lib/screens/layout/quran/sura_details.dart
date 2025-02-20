@@ -1,5 +1,6 @@
 import 'package:eslami/core/constant/app_assets.dart';
 import 'package:eslami/core/theme/app_colors.dart';
+import 'package:eslami/screens/layout/layout_screen.dart';
 import 'package:eslami/screens/layout/quran/Quran_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -41,7 +42,7 @@ class _SuraDetailsState extends State<SuraDetails> {
           leading: IconButton(
             icon: Icon(color: AppColors.coffee, Icons.arrow_back),
             onPressed: () {
-              Navigator.pushNamed(context, QuranScreen.routeName);
+              Navigator.pushNamed(context, LayoutScreen.routeName);
             },
           ),
           title: Text(
