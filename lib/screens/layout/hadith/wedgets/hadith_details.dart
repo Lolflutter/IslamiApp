@@ -9,8 +9,7 @@ import '../hadith_model.dart';
 class HadithDetails extends StatelessWidget {
   static const String routeName = 'HadithDetails';
 
-
-   HadithDetails({super.key});
+  HadithDetails({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -56,11 +55,14 @@ class HadithDetails extends StatelessWidget {
           SingleChildScrollView(
             child: Column(
               children: [
-                Text(arg.body,style: theme.textTheme.bodyLarge ,textDirection: TextDirection.rtl,),
+                Text(
+                  arg.body,
+                  style: theme.textTheme.bodyLarge,
+                  textDirection: TextDirection.rtl,
+                ),
               ],
             ),
           )
-
         ]));
   }
 }

@@ -37,6 +37,10 @@ dependencies:
   smooth_page_indicator:
   google_fonts: ^6.2.1
   carousel_slider:
+  contained_tab_bar_view:
+  dio:
+  audioplayers:
+  just_audio:
 
 
 dev_dependencies:
@@ -69,6 +73,7 @@ flutter:
      - assets/initial pages/
      - assets/suras/Suras/
      - assets/Hadeeth/
+     - assets/
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

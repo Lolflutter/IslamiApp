@@ -2,6 +2,9 @@ import 'package:eslami/core/theme/app_colors.dart';
 import 'package:eslami/screens/layout/hadith/hadith_screen.dart';
 import 'package:eslami/screens/layout/hadith/wedgets/hadith_details.dart';
 import 'package:eslami/screens/layout/layout_screen.dart';
+import 'package:eslami/screens/layout/pray_time/prayTime_screen.dart';
+import 'package:eslami/screens/layout/pray_time/widgets/azkar_card.dart';
+import 'package:eslami/screens/layout/pray_time/widgets/morning_azkar.dart';
 import 'package:eslami/screens/layout/quran/Quran_screen.dart';
 import 'package:eslami/screens/layout/quran/sura_details.dart';
 import 'package:eslami/screens/layout/radio/radio_screen.dart';
@@ -37,6 +40,10 @@ class MyApp extends StatelessWidget {
         RadioScreen.routeName : (context)=> RadioScreen(),
         HadithDetails.routeName : (context)=> HadithDetails(),
         SuraDetails.routeName : (context)=> SuraDetails(index: 0,),
+        PrayTimeScreen.routeName : (context)=> PrayTimeScreen(),
+        EveningAzkarCard.routeName : (context)=> EveningAzkarCard(),
+        MorningAzkarCard.routeName : (context)=> MorningAzkarCard(),
+
       }
     );
   }

@@ -15,6 +15,30 @@ class QuranScreen extends StatefulWidget {
 }
 
 class _QuranScreenState extends State<QuranScreen> {
+  final ScrollController _scrollController = ScrollController();
+  bool _showHistory = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController.addListener(_scrollListener);
+  }
+
+  void _scrollListener() {
+    if (_scrollController.offset > 50 && _showHistory) {
+      setState(() => _showHistory = false);
+    } else if (_scrollController.offset <= 50 && !_showHistory) {
+      setState(() => _showHistory = true);
+    }
+  }
+
+  @override
+  void dispose() {
+    _scrollController.removeListener(_scrollListener);
+    _scrollController.dispose();
+    super.dispose();
+  }
+
   final List<String> arabicQuranSuras = [
     "الفاتحه",
     "البقرة",
@@ -368,17 +392,17 @@ class _QuranScreenState extends State<QuranScreen> {
   List<String> ayaNumberSearch = [];
   List<int> suraIds = [];
   List<int> Ids = [];
+
   @override
   Widget build(BuildContext context) {
-    var theme = Theme.of(context);
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: Container(
-        height: double.infinity,
-        width: double.infinity,
         decoration: BoxDecoration(
           image: DecorationImage(
-              image: AssetImage(AppAssets.quranBg), fit: BoxFit.cover),
+            image: AssetImage(AppAssets.quranBg),
+            fit: BoxFit.cover,
+          ),
         ),
         child: Container(
           decoration: BoxDecoration(
@@ -389,96 +413,94 @@ class _QuranScreenState extends State<QuranScreen> {
           ),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(15),
-                  child: Center(child: Image.asset(AppAssets.islamiMosquelogo)),
-                ),
-                TextField(
-                  onChanged: (value) => search(value),
-                  style: TextStyle(color: AppColors.white),
-                  decoration: InputDecoration(
-                    hintText: 'sura name',
-                    hintStyle: TextStyle(color: AppColors.white),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      borderSide: BorderSide(
-                        color: AppColors.coffee,
-                        width: 1,
+            child: CustomScrollView(
+              controller: _scrollController,
+              slivers: [
+                SliverToBoxAdapter(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(15),
+                        child: Center(
+                          child: Image.asset(AppAssets.islamiMosquelogo),
+                        ),
                       ),
-                    ),
-                    disabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      borderSide: BorderSide(
-                        color: AppColors.coffee,
-                        width: 1,
+                      TextField(
+                        onChanged: (value) => search(value),
+                        style: TextStyle(color: AppColors.white),
+                        decoration: InputDecoration(
+                          hintText: 'sura name',
+                          hintStyle: TextStyle(color: AppColors.white),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                            borderSide: BorderSide(
+                              color: AppColors.coffee,
+                              width: 1,
+                            ),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                            borderSide: BorderSide(
+                              color: AppColors.coffee,
+                              width: 1,
+                            ),
+                          ),
+                          prefixIcon: ImageIcon(
+                            AssetImage(AppAssets.searchIcon),
+                            color: AppColors.coffee,
+                          ),
+                        ),
                       ),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                      borderSide: BorderSide(
-                        color: AppColors.coffee,
-                        width: 1,
-                      ),
-                    ),
-                    prefixIcon: ImageIcon(
-                      AssetImage(AppAssets.searchIcon),
-                      color: AppColors.coffee,
-                    ),
-                  ),
-                ),
-                Text(
-                  'Most recently',
-                  style: theme.textTheme.bodyMedium!
-                      .copyWith(color: AppColors.white),
-                ),
-                SizedBox(
-                    height: MediaQuery.of(context).size.height* 0.14,
-                    child: ListView.builder(
-                      itemCount:Ids.length ,
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder:(context, index) {
-                        HistoryWidget(
-                            surahEn: arabicQuranSuras[Ids[index]],
-                            surahAr: arabicQuranSuras[Ids[index]],
-                            ayaNumber:ayaNumber[Ids[index]]
-                        );
-
-                      }
-                    )
-                ),
-
-                Text(
-                  'Sura List',
-                  style: TextStyle(
-                    color: AppColors.white,
-                  ),
-                ),
-                Expanded(
-                  child: ListView.separated(
-                      itemBuilder: (context, index) {
-                        return suraSearchAr.isEmpty
-                            ? SurasWidget(
-                                index: index,
-                                ayaNumber: ayaNumber[index],
-                                surahAr: arabicQuranSuras[index],
-                                surahEn: arabicQuranSuras[index],
-                                onTap: saveId,
-                              )
-                            : SurasWidget(
-                                index: suraIds[index],
-                                ayaNumber: ayaNumber[index],
-                                surahAr: suraSearchAr[index],
-                                surahEn: suraSearchEn[index],
-                                onTap: saveId,
+                      if (_showHistory) ...[
+                        Text(
+                          'Most recently',
+                          style: Theme.of(context).textTheme.bodyMedium!.copyWith(color: AppColors.white),
+                        ),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.14,
+                          child: ListView.builder(
+                            itemCount: Ids.length,
+                            scrollDirection: Axis.horizontal,
+                            itemBuilder: (context, index) {
+                              return HistoryWidget(
+                                surahEn: arabicQuranSuras[Ids[index]],
+                                surahAr: englishQuranSurahs[Ids[index]],
+                                ayaNumber: ayaNumber[Ids[index]],
                               );
-                      },
-                      separatorBuilder: (context, index) => Divider(),
-                      itemCount:
-                          suraSearchAr.isEmpty ? 114 : suraSearchAr.length),
-                )
+                            },
+                          ),
+                        ),
+                      ],
+                      Text(
+                        'Sura List',
+                        style: TextStyle(color: AppColors.white),
+                      ),
+                    ],
+                  ),
+                ),
+                SliverList(
+                  delegate: SliverChildBuilderDelegate(
+                        (context, index) {
+                      return suraSearchAr.isEmpty
+                          ? SurasWidget(
+                        index: index,
+                        ayaNumber: ayaNumber[index],
+                        surahAr: arabicQuranSuras[index],
+                        surahEn: arabicQuranSuras[index],
+                        onTap: saveId,
+                      )
+                          : SurasWidget(
+                        index: suraIds[index],
+                        ayaNumber: ayaNumber[index],
+                        surahAr: suraSearchAr[index],
+                        surahEn: suraSearchEn[index],
+                        onTap: saveId,
+                      );
+                    },
+                    childCount: suraSearchAr.isEmpty ? 114 : suraSearchAr.length,
+                  ),
+                ),
               ],
             ),
           ),
@@ -503,13 +525,10 @@ class _QuranScreenState extends State<QuranScreen> {
     setState(() {});
   }
 
-
   void saveId(int index) {
     if (!Ids.contains(index)) {
       Ids.add(index);
     }
     setState(() {});
   }
-
 }
-
